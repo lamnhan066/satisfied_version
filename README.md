@@ -1,6 +1,6 @@
 # Satisfied Version
 
-Check a version is satisfy with provided String, List, Map of versions or not.
+Check whether the version is satisfied with provided String, List, or Map of versions or not.
 
 ## Usage
 
@@ -47,3 +47,12 @@ final result = '1.0.0'.isSatisfiedVersion('<=1.0.0'); // => true
 final result = '1.0.0'.isSatisfiedVersion(['<=1.0.0']); // => true
 final result = '1.0.0'.isSatisfiedVersion(['<=1.0.0' : false]); // => false
 ```
+
+## Aditional Parameters
+
+- For all:
+  - `defaultCondition` is the default condition if the compared version is provided without condition. Default value is `SatisfiedCondition.equal`.
+  
+- For specific `Map`:
+  - `defaultValue` is the default result for `Map` when `appVersion` is not in any range.
+  - `preferTrue` is the preferred value when there are multiple results in `Map`.

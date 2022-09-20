@@ -17,40 +17,40 @@ extension SatisfiedVersionEx on String {
   ///   `SatisfiedVersion.list`
   ///   `SatisfiedVersion.map`
   bool isSatisfiedVersion(
-    /// [version] only supports `String`, `List<String>` and `Map<String, bool>`
-    dynamic version, {
+    /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
+    dynamic compareWith, {
 
-    /// [defaultValue] is the default result for `List` and `Map`
+    /// [defaultValue] is the default result for `Map` when `appVersion` is not in any range.
     bool defaultValue = false,
 
-    /// [preferTrue] is the priority value when multiple results are available
+    /// [preferTrue] is the preferred value when there are multiple results in `Map`.
     bool preferTrue = false,
 
-    /// [defaultCondition] is the default condition if 2 version is provided without condition
+    /// [defaultCondition] is the default condition if the compared version is provided without condition.
     ///
     /// `'1.0.0'.isSatisfiedVersion('1.0.0') = '1.0.0'.isSatisfiedVersion('==1.0.0') => true`
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
-    if (version is String) {
+    if (compareWith is String) {
       return SatisfiedVersion.isSatisfied(
         this,
-        version,
+        compareWith,
         defaultCondition: defaultCondition,
       );
     }
 
-    if (version is List) {
+    if (compareWith is List) {
       return SatisfiedVersion.list(
         this,
-        version as List<String>,
+        compareWith as List<String>,
         defaultCondition: defaultCondition,
       );
     }
 
-    if (version is Map) {
+    if (compareWith is Map) {
       return SatisfiedVersion.map(
         this,
-        version as Map<String, bool>,
+        compareWith as Map<String, bool>,
         defaultValue: defaultValue,
         defaultCondition: defaultCondition,
         preferTrue: preferTrue,
@@ -63,6 +63,9 @@ extension SatisfiedVersionEx on String {
 }
 
 class SatisfiedVersion {
+  /// Prevent creating new instances
+  SatisfiedVersion._();
+
   /// Compare 2 version with conditions
   ///
   /// `isSatisfied('1.0.0', '>=1.0.0')` => true
@@ -77,38 +80,43 @@ class SatisfiedVersion {
   ///
   /// Default is return `appVersion == version`
   static bool isSatisfied(
-    String appVersion,
-    String version, {
+    /// This is normally your current app version.
+    String version,
+
+    /// The version that has conditions to compare with `version`.
+    String compareWith, {
+
+    /// Default condition if `compareWith` doesn't have the condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
-    appVersion = appVersion.trim();
     version = version.trim();
+    compareWith = compareWith.trim();
 
-    if (version.startsWith(SatisfiedCondition.greaterEqual.asString)) {
-      return appVersion.compareTo(version.substring(2).trim()) >= 0;
+    if (compareWith.startsWith(SatisfiedCondition.greaterEqual.asString)) {
+      return version.compareTo(compareWith.substring(2).trim()) >= 0;
     }
 
-    if (version.startsWith(SatisfiedCondition.lessEqual.asString)) {
-      return appVersion.compareTo(version.substring(2).trim()) <= 0;
+    if (compareWith.startsWith(SatisfiedCondition.lessEqual.asString)) {
+      return version.compareTo(compareWith.substring(2).trim()) <= 0;
     }
 
-    if (version.startsWith(SatisfiedCondition.equal.asString)) {
-      return appVersion.compareTo(version.substring(2).trim()) == 0;
+    if (compareWith.startsWith(SatisfiedCondition.equal.asString)) {
+      return version.compareTo(compareWith.substring(2).trim()) == 0;
     }
 
-    if (version.startsWith(SatisfiedCondition.greater.asString)) {
-      return appVersion.compareTo(version.substring(1).trim()) > 0;
+    if (compareWith.startsWith(SatisfiedCondition.greater.asString)) {
+      return version.compareTo(compareWith.substring(1).trim()) > 0;
     }
 
-    if (version.startsWith(SatisfiedCondition.less.asString)) {
-      return appVersion.compareTo(version.substring(1).trim()) < 0;
+    if (compareWith.startsWith(SatisfiedCondition.less.asString)) {
+      return version.compareTo(compareWith.substring(1).trim()) < 0;
     }
 
-    if (version.startsWith(SatisfiedCondition.equalSingle.asString)) {
-      return appVersion.compareTo(version.substring(1).trim()) == 0;
+    if (compareWith.startsWith(SatisfiedCondition.equalSingle.asString)) {
+      return version.compareTo(compareWith.substring(1).trim()) == 0;
     }
 
-    return isSatisfied(appVersion, '${defaultCondition.asString}$version');
+    return isSatisfied(version, '${defaultCondition.asString}$compareWith');
   }
 
   /// Return `true` if there is any satisfied version in sources
@@ -120,13 +128,18 @@ class SatisfiedVersion {
   /// print(SatisfiedVersion.list('0.0.9', versions)); // => true
   /// ```
   static bool list(
-    String appVersion,
-    List<String> versions, {
+    /// This is normally your current app version.
+    String version,
+
+    /// The version that has conditions to compare with `version`.
+    List<String> versionList, {
+
+    /// [defaultCondition] is the default condition if the compared version is provided without condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
-    for (final e in versions) {
+    for (final e in versionList) {
       if (isSatisfied(
-        appVersion,
+        version,
         e,
         defaultCondition: defaultCondition,
       )) {
@@ -149,20 +162,29 @@ class SatisfiedVersion {
   /// print(SatisfiedVersion.map('0.0.9', versions)); // => true
   /// ```
   static bool map(
-    String appVersion,
-    Map<String, bool> sources, {
+    /// This is normally your current app version.
+    String version,
+
+    /// The version that has conditions to compare with `version`.
+    Map<String, bool> versionMap, {
+
+    /// [preferTrue] is the preferred value when there are multiple results.
     bool preferTrue = false,
+
+    /// [defaultValue] is the default result for `Map` when `version` is not in any range.
     bool defaultValue = false,
+
+    /// [defaultCondition] is the default condition if the compared version is provided without condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
     bool? result;
-    for (final e in sources.keys) {
+    for (final e in versionMap.keys) {
       if (isSatisfied(
-        appVersion,
+        version,
         e,
         defaultCondition: defaultCondition,
       )) {
-        result = sources[e]!;
+        result = versionMap[e]!;
 
         if (result == preferTrue) return result;
       }
