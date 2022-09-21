@@ -1,6 +1,6 @@
 name: satisfied_version
 description: Check whether the version is satisfied with provided String, List, or Map of versions or not.
-version: 0.0.1+1
+version: 0.0.1+2
 homepage: https://github.com/vursin/satisfied_version
 
 environment:
@@ -8,17 +8,7 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
-flutter:
- 
+  test: ^1.21.3
+  lints: ^2.0.0

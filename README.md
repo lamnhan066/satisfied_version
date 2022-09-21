@@ -48,7 +48,7 @@ final result = '1.0.0'.isSatisfiedVersion(['<=1.0.0']); // => true
 final result = '1.0.0'.isSatisfiedVersion(['<=1.0.0' : false]); // => false
 ```
 
-## Aditional Parameters
+## Additional Parameters
 
 - For all:
   - `defaultCondition` is the default condition if the compared version is provided without condition. Default value is `SatisfiedCondition.equal`.

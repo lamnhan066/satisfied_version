@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:satisfied_version/satisfied_version.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('SatisfiedVersion', () {
