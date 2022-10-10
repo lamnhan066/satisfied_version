@@ -1,3 +1,7 @@
+## 0.0.1+3
+
+* Supports dart native.
+
 ## 0.0.1+2
 
 * README typo.
