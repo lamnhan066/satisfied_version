@@ -41,10 +41,17 @@ void main() {
 
     test('satisfiedList', () {
       const versions = ['<1.0.0', '>=1.0.2'];
-
       expect(SatisfiedVersion.list('1.0.0', versions), equals(false));
       expect(SatisfiedVersion.list('1.0.3', versions), equals(true));
       expect(SatisfiedVersion.list('0.0.9', versions), equals(true));
+
+      const versionsWithin = ['>1.0.0', '<1.5.0', '1.6.0', '>=2.0.0', '<2.0.2'];
+      expect(SatisfiedVersion.list('1.0.0', versionsWithin), equals(false));
+      expect(SatisfiedVersion.list('1.1.0', versionsWithin), equals(true));
+      expect(SatisfiedVersion.list('1.5.1', versionsWithin), equals(false));
+      expect(SatisfiedVersion.list('1.6.0', versionsWithin), equals(true));
+      expect(SatisfiedVersion.list('2.0.1', versionsWithin), equals(true));
+      expect(SatisfiedVersion.list('2.0.2', versionsWithin), equals(false));
     });
 
     test('satisfiedMap', () {

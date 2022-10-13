@@ -1,10 +1,10 @@
 enum SatisfiedCondition {
   equal('=='),
+  greaterEqual('>='),
+  lessEqual('<='),
   equalSingle('='),
   greater('>'),
-  greaterEqual('>='),
-  less('<'),
-  lessEqual('<=');
+  less('<');
 
   final String asString;
 
@@ -13,9 +13,9 @@ enum SatisfiedCondition {
 
 extension SatisfiedVersionEx on String {
   /// Extension for the below methods with auto recognition:
-  ///   `SatisfiedVersion.isSatisfied`
-  ///   `SatisfiedVersion.list`
-  ///   `SatisfiedVersion.map`
+  ///   [SatisfiedVersion.isSatisfied]
+  ///   [SatisfiedVersion.list]
+  ///   [SatisfiedVersion.map]
   bool isSatisfiedVersion(
     /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
     dynamic compareWith, {
@@ -127,6 +127,16 @@ class SatisfiedVersion {
   /// print(SatisfiedVersion.list('1.0.3', versions)); // => true
   /// print(SatisfiedVersion.list('0.0.9', versions)); // => true
   /// ```
+  ///
+  /// Support value bettwen 2 versions
+  /// ``` dart
+  /// const versionsInside = ['>1.0.0', '<1.5.0', '>=2.0.0', '<2.0.2'];
+  /// print(SatisfiedVersion.list('1.0.0', versionsInside)); // => false
+  /// print(SatisfiedVersion.list('1.0.3', versionsInside)); // => true
+  /// print(SatisfiedVersion.list('1.5.1', versionsInside)); // => false
+  /// print(SatisfiedVersion.list('2.0.1', versionsInside)); // => true
+  /// print(SatisfiedVersion.list('2.0.3', versionsInside)); // => false
+  /// ```
   static bool list(
     /// This is normally your current app version.
     String version,
@@ -137,15 +147,44 @@ class SatisfiedVersion {
     /// [defaultCondition] is the default condition if the compared version is provided without condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
-    for (final e in versionList) {
-      if (isSatisfied(
+    final List<String> versionListCopy = [...versionList];
+
+    // Sort the versionList by it's version
+    versionListCopy
+        .sort((a, b) => _removeCondition(a).compareTo(_removeCondition(b)));
+
+    bool? lastBool;
+    bool? currentBool;
+    for (final e in versionListCopy) {
+      // If current condition is greater or greaterEqual then set `lastBool` to null.
+      // Means we put the starting point here.
+      if ([SatisfiedCondition.greater, SatisfiedCondition.greaterEqual]
+          .contains(_getCondition(e))) {
+        lastBool = null;
+
+        // If the first comparison version is greater than `version` => stop comparing
+        if (!isSatisfied(version, e)) break;
+      }
+      currentBool = isSatisfied(
         version,
         e,
         defaultCondition: defaultCondition,
-      )) {
+      );
+
+      // If both values are true, the current version is in the two conditions.
+      if (lastBool == true && currentBool == true) {
         return true;
       }
+
+      // If last value => end comparing
+      if (versionListCopy.last == e) break;
+
+      // Else set currentBool to lastBool
+      lastBool = currentBool;
     }
+
+    // Means inside [-infinity;version] or [version;infinity]
+    if (lastBool == null && currentBool == true) return true;
 
     return false;
   }
@@ -191,5 +230,20 @@ class SatisfiedVersion {
     }
 
     return result ?? defaultValue;
+  }
+
+  static SatisfiedCondition _getCondition(String version) {
+    for (final condition in SatisfiedCondition.values) {
+      if (version.startsWith(condition.asString)) return condition;
+    }
+    return _getCondition('=$version');
+  }
+
+  static String _removeCondition(String version) {
+    final condition = _getCondition(version);
+    if (version.startsWith(condition.asString)) {
+      return version.substring(condition.asString.length);
+    }
+    return version;
   }
 }
