@@ -1,6 +1,6 @@
 name: satisfied_version
 description: Check whether the version is satisfied with provided String, List, or Map of versions or not.
-version: 0.0.2
+version: 0.1.0
 homepage: https://github.com/vursin/satisfied_version
 
 environment:

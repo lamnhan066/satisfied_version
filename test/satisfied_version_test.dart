@@ -3,79 +3,123 @@ import 'package:test/test.dart';
 
 void main() {
   group('SatisfiedVersion', () {
-    test('isSatisfiedVersion', () {
-      const appVersion = '1.0.0';
+    const String appVersion = '1.0.0';
+    const Map<String, bool> testStringWithCondition = {
+      // >
+      '>1.0.0': false,
+      '>0.0.9': true,
+      '>1.0.1': false,
+      // <
+      '<1.0.0': false,
+      '<0.0.9': false,
+      '<1.0.1': true,
+      // >=
+      '>=1.0.0': true,
+      '>=1.0.1': false,
+      '>=0.0.9': true,
+      // <=
+      '<=1.0.0': true,
+      '<=1.0.1': true,
+      '<=0.0.9': false,
+      // =
+      '=1.0.0': true,
+      '=1.0.1': false,
+      '=0.0.9': false,
+      // ==
+      '==1.0.0': true,
+      '==1.0.1': false,
+      '==0.0.9': false,
+      // Default is SatisfiedCondition.equal
+      '1.0.0': true,
+      '1.0.1': false,
+      '0.0.9': false,
+    };
 
-      expect(SatisfiedVersion.isSatisfied(appVersion, '>1.0.0'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '>0.0.9'), equals(true));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '>1.0.1'), equals(false));
+    const List<String> conditionList = ['<1.0.0', '>=1.0.2'];
+    const Map<String, bool> testList = {
+      '1.0.0': false,
+      '1.0.3': true,
+      '0.0.9': true,
+    };
 
-      expect(SatisfiedVersion.isSatisfied(appVersion, '<1.0.0'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '<0.0.9'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '<1.0.1'), equals(true));
+    const List<String> conditionListWithin = [
+      '>1.0.0',
+      '<1.5.0',
+      '1.6.0',
+      '>=2.0.0',
+      '<2.0.2'
+    ];
+    const Map<String, bool> testListWithin = {
+      '1.0.0': false,
+      '1.1.0': true,
+      '1.5.1': false,
+      '1.6.0': true,
+      '2.0.1': true,
+      '2.0.2': false,
+    };
 
-      expect(SatisfiedVersion.isSatisfied(appVersion, '>=1.0.0'), equals(true));
-      expect(
-          SatisfiedVersion.isSatisfied(appVersion, '>=1.0.1'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '>=0.0.9'), equals(true));
+    const Map<String, bool> conditionMap = {
+      '<1.0.0': true,
+      '>=1.0.2': false,
+      '>=2.0.0': true,
+      '>=2.0.1': false,
+    };
+    const Map<String, bool> testMap = {
+      '1.0.0': false,
+      '1.0.3': false,
+      '0.0.9': true,
+    };
 
-      expect(SatisfiedVersion.isSatisfied(appVersion, '<=1.0.0'), equals(true));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '<=1.0.1'), equals(true));
-      expect(
-          SatisfiedVersion.isSatisfied(appVersion, '<=0.0.9'), equals(false));
+    test('satisfiedWith', () {
+      testStringWithCondition.forEach((conditionString, expectResult) {
+        expect(
+          SatisfiedVersion.string(appVersion, conditionString),
+          equals(expectResult),
+        );
 
-      expect(SatisfiedVersion.isSatisfied(appVersion, '=1.0.0'), equals(true));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '=1.0.1'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '=0.0.9'), equals(false));
-
-      expect(SatisfiedVersion.isSatisfied(appVersion, '==1.0.0'), equals(true));
-      expect(
-          SatisfiedVersion.isSatisfied(appVersion, '==1.0.1'), equals(false));
-      expect(
-          SatisfiedVersion.isSatisfied(appVersion, '==0.0.9'), equals(false));
-
-      expect(SatisfiedVersion.isSatisfied(appVersion, '1.0.0'), equals(true));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '1.0.1'), equals(false));
-      expect(SatisfiedVersion.isSatisfied(appVersion, '0.0.9'), equals(false));
+        // Extension
+        expect(appVersion.satisfiedWith(conditionString), equals(expectResult));
+      });
     });
 
     test('satisfiedList', () {
-      const versions = ['<1.0.0', '>=1.0.2'];
-      expect(SatisfiedVersion.list('1.0.0', versions), equals(false));
-      expect(SatisfiedVersion.list('1.0.3', versions), equals(true));
-      expect(SatisfiedVersion.list('0.0.9', versions), equals(true));
+      testList.forEach((version, expectResult) {
+        expectLater(SatisfiedVersion.list(version, conditionList),
+            equals(expectResult));
 
-      const versionsWithin = ['>1.0.0', '<1.5.0', '1.6.0', '>=2.0.0', '<2.0.2'];
-      expect(SatisfiedVersion.list('1.0.0', versionsWithin), equals(false));
-      expect(SatisfiedVersion.list('1.1.0', versionsWithin), equals(true));
-      expect(SatisfiedVersion.list('1.5.1', versionsWithin), equals(false));
-      expect(SatisfiedVersion.list('1.6.0', versionsWithin), equals(true));
-      expect(SatisfiedVersion.list('2.0.1', versionsWithin), equals(true));
-      expect(SatisfiedVersion.list('2.0.2', versionsWithin), equals(false));
+        // Extension
+        expect(version.satisfiedWith(conditionList), equals(expectResult));
+      });
+
+      testListWithin.forEach((version, expectResult) {
+        expect(SatisfiedVersion.list(version, conditionListWithin),
+            equals(expectResult));
+
+        // Extension
+        expect(
+            version.satisfiedWith(conditionListWithin), equals(expectResult));
+      });
     });
 
     test('satisfiedMap', () {
-      const versions = {
-        '<1.0.0': true,
-        '>=1.0.2': false,
-        '>=2.0.0': true,
-        '>=2.0.1': false,
-      };
+      testMap.forEach((version, expectResult) {
+        expect(
+            SatisfiedVersion.map(version, conditionMap), equals(expectResult));
 
-      expect(SatisfiedVersion.map('1.0.0', versions), equals(false));
-      expect(SatisfiedVersion.map('1.0.3', versions), equals(false));
-      expect(SatisfiedVersion.map('0.0.9', versions), equals(true));
+        // Extension
+        expect(version.satisfiedWith(conditionMap), equals(expectResult));
+      });
 
       expect(
-        SatisfiedVersion.map('1.0.9', versions, preferTrue: true),
+        SatisfiedVersion.map('1.0.9', conditionMap, preferTrue: true),
         equals(false),
       );
       expect(
-        SatisfiedVersion.map('2.0.5', versions, preferTrue: true),
+        SatisfiedVersion.map('2.0.5', conditionMap, preferTrue: true),
         equals(true),
       );
       expect(
-        SatisfiedVersion.map('2.0.5', versions, preferTrue: false),
+        SatisfiedVersion.map('2.0.5', conditionMap, preferTrue: false),
         equals(false),
       );
     });
