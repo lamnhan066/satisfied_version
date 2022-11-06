@@ -1,3 +1,7 @@
+## 0.1.0+1
+
+* Improved README.
+
 ## 0.1.0
 
 * [BUG] add `defaultCondition` to `_getCondition` (Internal).

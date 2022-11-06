@@ -59,7 +59,7 @@ print(SatisfiedVersion.map('0.0.9', versions)); // => true
 ``` dart
 final result = '1.0.0'.satisfiedWith('<=1.0.0'); // => true
 final result = '1.0.0'.satisfiedWith(['<=1.0.0', '>2.0.0']); // => true
-final result = '1.0.0'.satisfiedWith(['<=1.0.0' : false]); // => false
+final result = '1.0.0'.satisfiedWith({'<=1.0.0' : false}); // => false
 ```
 
 ## **Additional Parameters**
