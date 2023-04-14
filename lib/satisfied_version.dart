@@ -20,7 +20,6 @@ extension SatisfiedVersionEx on String {
   bool isSatisfiedVersion(
     /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
     dynamic compareWith, {
-
     /// [defaultValue] is the default result for `Map` when `appVersion` is not in any range.
     bool defaultValue = false,
 
@@ -46,7 +45,6 @@ extension SatisfiedVersionEx on String {
   bool satisfiedWith(
     /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
     dynamic compareWith, {
-
     /// [defaultValue] is the default result for `Map` when `appVersion` is not in any range.
     bool defaultValue = false,
 
@@ -113,7 +111,6 @@ class SatisfiedVersion {
 
     /// The version that has conditions to compare with `version`.
     String compareWith, {
-
     /// Default condition if `compareWith` doesn't have the condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) =>
@@ -138,7 +135,6 @@ class SatisfiedVersion {
 
     /// The version that has conditions to compare with `version`.
     String compareWith, {
-
     /// Default condition if `compareWith` doesn't have the condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
@@ -196,7 +192,6 @@ class SatisfiedVersion {
 
     /// The version that has conditions to compare with `version`.
     List<String> versionList, {
-
     /// [defaultCondition] is the default condition if the compared version is provided without condition.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
@@ -259,7 +254,6 @@ class SatisfiedVersion {
 
     /// The version that has conditions to compare with `version`.
     Map<String, bool> versionMap, {
-
     /// [preferTrue] is the preferred value when there are multiple results.
     bool preferTrue = false,
 

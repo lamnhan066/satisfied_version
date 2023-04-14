@@ -1,3 +1,7 @@
+## 0.1.0+2
+
+* Improved pub score.
+
 ## 0.1.0+1
 
 * Improved README.

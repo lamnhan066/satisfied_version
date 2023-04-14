@@ -1,12 +1,10 @@
 name: satisfied_version
 description: Check whether the version is satisfied with provided String, List, or Map of versions or not.
-version: 0.1.0+1
-homepage: https://github.com/vursin/satisfied_version
+version: 0.1.0+2
+homepage: https://github.com/vnniz/satisfied_version
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
-
-dependencies:
+  sdk: ">=2.17.0 <3.0.0"
 
 dev_dependencies:
   test: ^1.21.3
