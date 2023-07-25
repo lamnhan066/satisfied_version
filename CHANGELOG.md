@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Bump sdk to ">=2.18.0 <4.0.0".
+
 ## 0.1.0+2
 
 * Improved pub score.
