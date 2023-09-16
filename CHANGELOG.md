@@ -1,3 +1,10 @@
+## 0.3.0
+
+* Bump sdk to ">=3.0.0 <4.0.0".
+* Better support for the version with format "major.minor.patch".
+* Remove deprecated function: `.isSatisfiedVersion`, `SatisfiedVersion.isSatisfied`.
+* Improve test and cover up to 100%.
+
 ## 0.2.0
 
 * Bump sdk to ">=2.18.0 <4.0.0".

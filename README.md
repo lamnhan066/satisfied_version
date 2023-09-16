@@ -4,6 +4,8 @@ Check whether the version is satisfied with provided String, List, or Map of ver
 
 ## **Usage**
 
+**Only support a version with format `major.minor.patch`.**
+
 ### **String:** Compare 2 version with conditions
 
 ``` dart
@@ -13,6 +15,8 @@ SatisfiedVersion.string('1.0.0', '<=1.0.0') // => true
 SatisfiedVersion.string('1.0.0', '>1.0.0') // => false
 SatisfiedVersion.string('1.0.1', '>1.0.0') // => true
 SatisfiedVersion.string('1.0.0', '<1.0.0') // => false
+
+SatisfiedVersion.string('0.0.100', '>0.0.1') // => true
 
 SatisfiedVersion.string('1.0.0', '=1.0.0') // => true
 SatisfiedVersion.string('1.0.0', '==1.0.0') // => true
@@ -34,12 +38,12 @@ You can also compare the version within the range:
 // You can input a shuffled list of values, the plugin will sort it for you.
 // But I recommend you to sort it yourself to make it easier to maintain.
 const versionsWithin = ['>1.0.0', '<1.5.0', '1.6.0', '>=2.0.0', '<2.0.2'];
-print(SatisfiedVersion.list('1.0.0', versionsWithin); // => false
-print(SatisfiedVersion.list('1.1.0', versionsWithin); // => true
-print(SatisfiedVersion.list('1.5.1', versionsWithin); // => false
-print(SatisfiedVersion.list('1.6.0', versionsWithin); // => true
-print(SatisfiedVersion.list('2.0.1', versionsWithin); // => true
-print(SatisfiedVersion.list('2.0.2', versionsWithin); // => false
+print(SatisfiedVersion.list('1.0.0', versionsWithin)); // => false
+print(SatisfiedVersion.list('1.1.0', versionsWithin)); // => true
+print(SatisfiedVersion.list('1.5.1', versionsWithin)); // => false
+print(SatisfiedVersion.list('1.6.0', versionsWithin)); // => true
+print(SatisfiedVersion.list('2.0.1', versionsWithin)); // => true
+print(SatisfiedVersion.list('2.0.2', versionsWithin)); // => false
 ```
 
 ### **Map:** Return value of the satisfied key. Default is `false`
