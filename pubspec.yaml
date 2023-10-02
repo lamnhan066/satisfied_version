@@ -1,6 +1,6 @@
 name: satisfied_version
-description: Check whether the version is satisfied with provided String, List, or Map of versions or not.
-version: 0.3.0
+description: Compare and check whether the version is satisfied with provided version (or build number) in String, List, or Map.
+version: 0.4.0
 homepage: https://github.com/vnniz/satisfied_version
 
 environment:
