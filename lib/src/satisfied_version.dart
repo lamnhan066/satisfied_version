@@ -2,6 +2,16 @@ import 'conparator.dart';
 import 'satisfiled_condition.dart';
 
 class SatisfiedVersion {
+  /// Create a version with format ">=1.0.0" to avoid mistake.
+  static String createString(SatisfiedCondition condition, String string) {
+    return '${condition.asString}$string';
+  }
+
+  /// Create a build number with format ">=100" to avoid mistake.
+  static String createNumber(SatisfiedCondition condition, int number) {
+    return '${condition.asString}$number';
+  }
+
   ///  Compare 2 numbers with conditions
   ///
   /// `SatisfiedVersion.number(100, '>=100')` => true
