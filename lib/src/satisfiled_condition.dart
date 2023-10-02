@@ -1,15 +1,29 @@
 enum SatisfiedCondition {
+  /// ==
   equal('=='),
+
+  /// >=
   greaterEqual('>='),
+
+  /// <=
   lessEqual('<='),
+
+  /// =
   equalSingle('='),
+
+  /// >
   greater('>'),
+
+  /// <
   less('<');
 
+  /// Return this condition in String (>,<,>=,<=,==,=).
   final String asString;
 
+  /// Constuctor of the condition.
   const SatisfiedCondition(this.asString);
 
+  /// Check if a String starts with condition.
   static bool isStartWithCondition(String version) {
     for (final condition in values) {
       if (version.startsWith(condition.asString)) return true;
@@ -18,6 +32,7 @@ enum SatisfiedCondition {
     return false;
   }
 
+  /// Parse this [version] to [SatisfiedCondition].
   static SatisfiedCondition parse(
     String version, {
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
@@ -29,6 +44,7 @@ enum SatisfiedCondition {
     return defaultCondition;
   }
 
+  /// Remove condition from this [version].
   static String removeCondition(String version) {
     final condition = parse(
       version,

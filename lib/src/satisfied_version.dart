@@ -67,15 +67,15 @@ class SatisfiedVersion {
 
   ///  Compare 2 versions with format (major.minor.patch) with conditions
   ///
-  /// `satisfiedString('1.0.0', '>=1.0.0')` => true
-  /// `satisfiedString('1.0.0', '<=1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '>=1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '<=1.0.0')` => true
   ///
-  /// `satisfiedString('1.0.0', '>1.0.0')` => false
-  /// `satisfiedString('1.0.1', '>1.0.0')` => true
-  /// `satisfiedString('1.0.0', '<1.0.0')` => false
+  /// `SatisfiedVersion.string('1.0.0', '>1.0.0')` => false
+  /// `SatisfiedVersion.string('1.0.1', '>1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '<1.0.0')` => false
   ///
-  /// `satisfiedString('1.0.0', '=1.0.0')` => true
-  /// `satisfiedString('1.0.0', '==1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '=1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '==1.0.0')` => true
   ///
   /// Default is return `appVersion == version`
   static bool string(
@@ -327,7 +327,7 @@ class SatisfiedVersion {
   /// const versions = {'<100' : true, '>=102' : false};
   /// print(SatisfiedVersion.map(100, versions)); // => false
   /// print(SatisfiedVersion.map(103, versions)); // => false
-  /// print(SatisfiedVersion.map(9, versions)); // => true
+  /// print(SatisfiedVersion.map(99, versions)); // => true
   /// ```
   static bool mapNumber(
     /// This is normally your current app version.

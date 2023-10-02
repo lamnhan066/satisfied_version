@@ -51,9 +51,9 @@ extension SatisfiedVersionEx on String {
 
 extension SatisfiedWithIntEx on int {
   /// Extension for the below methods with auto recognition:
-  ///   [SatisfiedVersion.string]
-  ///   [SatisfiedVersion.list]
-  ///   [SatisfiedVersion.map]
+  ///   [SatisfiedVersion.number]
+  ///   [SatisfiedVersion.listNumber]
+  ///   [SatisfiedVersion.mapNumber]
   bool satisfiedWith(
     /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
     ///
