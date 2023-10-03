@@ -100,14 +100,14 @@ final number = SatisfiedVersion.createNumber(SatisfiedCondition.greater, 100); /
 
 ``` dart
 // string
-final result = '1.0.0'.satisfysWith('<=1.0.0'); // => true
-final result = '1.0.0'.satisfysWith(['<=1.0.0', '>2.0.0']); // => true
-final result = '1.0.0'.satisfysWith({'<=1.0.0' : false}); // => false
+final result = '1.0.0'.satisfiedWith('<=1.0.0'); // => true
+final result = '1.0.0'.satisfiedWith(['<=1.0.0', '>2.0.0']); // => true
+final result = '1.0.0'.satisfiedWith({'<=1.0.0' : false}); // => false
 
 // integer
-final result = 100.satisfysWith('<=1.0.0'); // => true
-final result = 100.satisfysWith(['<=1.0.0', '>2.0.0']); // => true
-final result = 100.satisfysWith({'<=1.0.0' : false}); // => false
+final result = 100.satisfiedWith('<=1.0.0'); // => true
+final result = 100.satisfiedWith(['<=1.0.0', '>2.0.0']); // => true
+final result = 100.satisfiedWith({'<=1.0.0' : false}); // => false
 ```
 
 ## **Additional Parameters**

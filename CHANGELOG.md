@@ -1,10 +1,15 @@
+## 0.4.1
+
+* Fix README typo.
+* Fix CHANGELOG typo.
+
 ## 0.4.0
 
 * Add supports for build number (compare 2 integers).
 * Add `createString` and `createNumber` as helpers to create a version in `String` and `int` with leading condition.
 * Rename from `satisfiedWith` to `satisfysWith` (`satisfiedWith` will be marked as deprecated).
 * **BREAKING CHANGE**
-  * Remove `preferValue` in `Map`, the biggest version value will be used if there is many satisfied version ranges.
+  * Remove `preferTrue` in `Map`, the biggest version value will be used if there is many satisfied version ranges.
 
 ## 0.3.0
 
