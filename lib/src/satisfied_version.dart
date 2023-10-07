@@ -12,19 +12,19 @@ class SatisfiedVersion {
     return '${condition.asString}$number';
   }
 
-  ///  Compare 2 numbers with conditions
+  ///  Compare 2 numbers with conditions.
   ///
-  /// `SatisfiedVersion.number(100, '>=100')` => true
-  /// `SatisfiedVersion.number(100, '<=100')` => true
+  /// `SatisfiedVersion.number(100, '>=100')` => true.
+  /// `SatisfiedVersion.number(100, '<=100')` => true.
   ///
-  /// `SatisfiedVersion.number(100, '>100')` => false
-  /// `SatisfiedVersion.number(101, '>100')` => true
-  /// `SatisfiedVersion.number(100, '<100')` => false
+  /// `SatisfiedVersion.number(100, '>100')` => false.
+  /// `SatisfiedVersion.number(101, '>100')` => true.
+  /// `SatisfiedVersion.number(100, '<100')` => false.
   ///
-  /// `SatisfiedVersion.number(100, '=100')` => true
-  /// `SatisfiedVersion.number(100, '==100')` => true
+  /// `SatisfiedVersion.number(100, '=100')` => true.
+  /// `SatisfiedVersion.number(100, '==100')` => true.
   ///
-  /// Default is return `number == compareWith`
+  /// Default is return `number == compareWith`.
   static bool number(
     /// This is normally your current app build number.
     int number,
@@ -36,12 +36,12 @@ class SatisfiedVersion {
   }) {
     compareWith = compareWith.trim();
 
-    // Add the condition to the version that does not starts with any condition
+    // Add the condition to the version that does not starts with any condition.
     if (!SatisfiedCondition.isStartWithCondition(compareWith)) {
       compareWith = '${defaultCondition.asString}$compareWith';
     }
 
-    // Compare with 2 operator letters
+    // Compare with 2 operator letters.
     final compareWithNumber =
         int.tryParse(SatisfiedCondition.removeCondition(compareWith));
 
@@ -65,19 +65,19 @@ class SatisfiedVersion {
     }
   }
 
-  ///  Compare 2 versions with format (major.minor.patch) with conditions
+  ///  Compare 2 versions with format (major.minor.patch) with conditions.
   ///
-  /// `SatisfiedVersion.string('1.0.0', '>=1.0.0')` => true
-  /// `SatisfiedVersion.string('1.0.0', '<=1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '>=1.0.0')` => true.
+  /// `SatisfiedVersion.string('1.0.0', '<=1.0.0')` => true.
   ///
-  /// `SatisfiedVersion.string('1.0.0', '>1.0.0')` => false
-  /// `SatisfiedVersion.string('1.0.1', '>1.0.0')` => true
-  /// `SatisfiedVersion.string('1.0.0', '<1.0.0')` => false
+  /// `SatisfiedVersion.string('1.0.0', '>1.0.0')` => false.
+  /// `SatisfiedVersion.string('1.0.1', '>1.0.0')` => true.
+  /// `SatisfiedVersion.string('1.0.0', '<1.0.0')` => false.
   ///
-  /// `SatisfiedVersion.string('1.0.0', '=1.0.0')` => true
-  /// `SatisfiedVersion.string('1.0.0', '==1.0.0')` => true
+  /// `SatisfiedVersion.string('1.0.0', '=1.0.0')` => true.
+  /// `SatisfiedVersion.string('1.0.0', '==1.0.0')` => true.
   ///
-  /// Default is return `appVersion == version`
+  /// Default is return `appVersion == version`.
   static bool string(
     /// This is normally your current app version.
     String version,
@@ -90,14 +90,14 @@ class SatisfiedVersion {
     version = version.trim();
     compareWith = compareWith.trim();
 
-    // Add the condition to the version that does not starts with any condition
+    // Add the condition to the version that does not starts with any condition.
     if (!SatisfiedCondition.isStartWithCondition(compareWith)) {
       compareWith = '${defaultCondition.asString}$compareWith';
     }
 
     final comparator = Comparator(version: version);
 
-    // Compare with 2 operator letters
+    // Compare with 2 operator letters.
     final otherComparator =
         Comparator(version: SatisfiedCondition.removeCondition(compareWith));
 
@@ -116,7 +116,7 @@ class SatisfiedVersion {
     }
   }
 
-  /// Return `true` if there is any satisfied version in sources
+  /// Return `true` if there is any satisfied version in sources.
   ///
   /// ``` dart
   /// const versions = ['<1.0.0', '>=1.0.2'];
@@ -145,7 +145,7 @@ class SatisfiedVersion {
   }) {
     final List<String> versionListCopy = [...versionList];
 
-    // Sort the versionList by it's version
+    // Sort the versionList by it's version.
     versionListCopy.sort((a, b) {
       final aComparator =
           Comparator(version: SatisfiedCondition.removeCondition(a));
@@ -166,7 +166,7 @@ class SatisfiedVersion {
           case SatisfiedCondition.greater || SatisfiedCondition.greaterEqual) {
         lastBool = null;
 
-        // If the first comparison version is greater than `version` => stop comparing
+        // If the first comparison version is greater than `version` => stop comparing.
         if (!string(version, e, defaultCondition: defaultCondition)) {
           break;
         }
@@ -179,20 +179,20 @@ class SatisfiedVersion {
         return true;
       }
 
-      // If last value => end comparing
+      // If last value => end comparing.
       if (versionListCopy.last == e) break;
 
-      // Else set currentBool to lastBool
+      // Else set currentBool to lastBool.
       lastBool = currentBool;
     }
 
-    // Means inside [-infinity;version] or [version;infinity]
+    // Means inside [-infinity;version] or [version;infinity].
     if (lastBool == null && currentBool == true) return true;
 
     return false;
   }
 
-  /// Return `true` if there is any satisfied version in sources
+  /// Return `true` if there is any satisfied version in sources.
   ///
   /// ``` dart
   /// const versions = ['<100', '>=102'];
@@ -221,7 +221,7 @@ class SatisfiedVersion {
   }) {
     final List<String> versionListCopy = [...versionList];
 
-    // Sort the versionList by it's version
+    // Sort the versionList by it's version.
     versionListCopy.sort((a, b) {
       final aComparator = int.parse(SatisfiedCondition.removeCondition(a));
       final bComparator = int.parse(SatisfiedCondition.removeCondition(b));
@@ -253,23 +253,20 @@ class SatisfiedVersion {
         return true;
       }
 
-      // If last value => end comparing
+      // If last value => end comparing.
       if (versionListCopy.last == e) break;
 
-      // Else set currentBool to lastBool
+      // Else set currentBool to lastBool.
       lastBool = currentBool;
     }
 
-    // Means inside [-infinity;version] or [version;infinity]
+    // Means inside [-infinity;version] or [version;infinity].
     if (lastBool == null && currentBool == true) return true;
 
     return false;
   }
 
-  /// Return value of the satisfied key. Default is `false`
-  ///
-  /// `preferTrue` = true: Return `true` if it has at least 1 true condition
-  /// `preferTrue` = false: Return `false` if it has at least 1 false condition. Default.
+  /// Return value of the satisfied key. Default is `false`.
   ///
   /// ``` dart
   /// const versions = {'<1.0.0' : true, '>=1.0.2' : false};
@@ -291,7 +288,7 @@ class SatisfiedVersion {
   }) {
     final versionMapCopy = {...versionMap};
 
-    // Sort the versionList by it's version
+    // Sort the versionList by it's version.
     versionMapCopy.entries.toList().sort((a, b) {
       final aComparator =
           Comparator(version: SatisfiedCondition.removeCondition(a.key));
@@ -302,7 +299,7 @@ class SatisfiedVersion {
 
     bool? result;
 
-    // Compare from the biggest version, the first matched will be returned
+    // Compare from the biggest version, the first matched will be returned.
     for (int i = versionMapCopy.length - 1; i >= 0; i--) {
       final compareWith = versionMapCopy.keys.elementAt(i);
 
@@ -343,7 +340,7 @@ class SatisfiedVersion {
   }) {
     final versionMapCopy = {...versionMap};
 
-    // Sort the versionList by it's version
+    // Sort the versionList by it's version.
     versionMapCopy.entries.toList().sort((a, b) {
       final aComparator = int.parse(SatisfiedCondition.removeCondition(a.key));
       final bComparator = int.parse(SatisfiedCondition.removeCondition(b.key));
@@ -352,7 +349,7 @@ class SatisfiedVersion {
 
     bool? result;
 
-    // Compare from the biggest version, the first matched will be returned
+    // Compare from the biggest version, the first matched will be returned.
     for (int i = versionMapCopy.length - 1; i >= 0; i--) {
       final compareWith = versionMapCopy.keys.elementAt(i);
 

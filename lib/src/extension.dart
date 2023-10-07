@@ -16,7 +16,7 @@ extension SatisfiedVersionEx on String {
 
     /// [defaultCondition] is the default condition if the compared version is provided without condition.
     ///
-    /// `'1.0.0'.satisfiedWith('1.0.0') = '1.0.0'.satisfiedWith('==1.0.0') => true`
+    /// `'1.0.0'.satisfiedWith('1.0.0') = '1.0.0'.satisfiedWith('==1.0.0') => true`.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
     if (compareWith is String) {
@@ -57,14 +57,14 @@ extension SatisfiedWithIntEx on int {
   bool satisfiedWith(
     /// [compareWith] only supports `String`, `List<String>` and `Map<String, bool>`.
     ///
-    /// '>=100'; ['>=100', '<=200']; {'>=100': true, '<=200': true}
+    /// '>=100'; ['>=100', '<=200']; {'>=100': true, '<=200': true}.
     dynamic compareWith, {
     /// [defaultValue] is the default result for `Map` when `appVersion` is not in any range.
     bool defaultValue = false,
 
     /// [defaultCondition] is the default condition if the compared version is provided without condition.
     ///
-    /// `100.satisfiedWith('100') = 100.satisfiedWith('==100') => true`
+    /// `100.satisfiedWith('100') = 100.satisfiedWith('==100') => true`.
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
     if (compareWith is String) {

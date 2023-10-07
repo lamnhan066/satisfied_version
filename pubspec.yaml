@@ -1,7 +1,7 @@
 name: satisfied_version
 description: Compare and check whether the version is satisfied with provided version (or build number) in String, List, or Map.
 version: 0.4.1
-homepage: https://github.com/vnniz/satisfied_version
+homepage: https://github.com/lamnhan066/satisfied_version
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

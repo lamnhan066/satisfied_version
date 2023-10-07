@@ -1,5 +1,7 @@
 ## 0.4.1
 
+* Update homepage URL.
+* Update comments.
 * Fix README typo.
 * Fix CHANGELOG typo.
 

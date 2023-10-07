@@ -1,20 +1,20 @@
 enum SatisfiedCondition {
-  /// ==
+  /// ==.
   equal('=='),
 
-  /// >=
+  /// >=.
   greaterEqual('>='),
 
-  /// <=
+  /// <=.
   lessEqual('<='),
 
-  /// =
+  /// =.
   equalSingle('='),
 
-  /// >
+  /// >.
   greater('>'),
 
-  /// <
+  /// <.
   less('<');
 
   /// Return this condition in String (>,<,>=,<=,==,=).

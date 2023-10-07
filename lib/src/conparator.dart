@@ -1,20 +1,20 @@
 class Comparator {
-  /// Version with format "major.minor.patch"
+  /// Version with format "major.minor.patch".
   final String version;
 
-  /// Detail of the version
+  /// Detail of the version.
   late final (int major, int minor, int patch)? detail;
 
-  /// A comparator to compare 2 versions with format "major.minor.patch"
+  /// A comparator to compare 2 versions with format "major.minor.patch".
   Comparator({
     required this.version,
   }) {
     detail = _splitVersion();
   }
 
-  /// Split the version into 3 number
+  /// Split the version into 3 number.
   ///
-  /// Returns `null` when there is error when splitting
+  /// Returns `null` when there is error when splitting.
   (int major, int minor, int patch)? _splitVersion() {
     final splitted = version.split('.');
     final major = int.tryParse(splitted[0]);
@@ -28,7 +28,7 @@ class Comparator {
     return (major, minor, patch);
   }
 
-  /// this > other
+  /// this > other.
   bool isGreater(Comparator other) {
     if (detail == null || other.detail == null) {
       return false;
@@ -48,13 +48,13 @@ class Comparator {
     return false;
   }
 
-  /// this >= other
+  /// this >= other.
   bool isGreaterEqual(Comparator other) {
     if (this == other) return true;
     return isGreater(other);
   }
 
-  /// this < other
+  /// this < other.
   bool isLess(Comparator other) {
     if (detail == null || other.detail == null) {
       return false;
@@ -74,7 +74,7 @@ class Comparator {
     return false;
   }
 
-  /// this <= other
+  /// this <= other.
   bool isLessEqual(Comparator other) {
     if (this == other) return true;
     return isLess(other);
