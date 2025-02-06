@@ -68,21 +68,25 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Play With Satisfied Version')),
+      appBar: AppBar(title: const Text('Play With The Satisfied Version')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextFormField(
               controller: _controller1,
-              decoration: const InputDecoration(labelText: 'Version'),
+              decoration: const InputDecoration(
+                labelText: 'Version (Ex: "1.0.0", "1.2.3",...)',
+              ),
               onChanged: (_) => _updateResult(),
               validator: (_) => _error1,
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
             TextFormField(
               controller: _controller2,
-              decoration: const InputDecoration(labelText: 'Compare With'),
+              decoration: const InputDecoration(
+                labelText: 'Compare With (Ex: ">=1.0.0", "<1.2.3",...)',
+              ),
               onChanged: (_) => _updateResult(),
               validator: (_) => _error2,
               autovalidateMode: AutovalidateMode.onUserInteraction,
