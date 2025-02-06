@@ -114,6 +114,22 @@ final result = 100.satisfiedWith(['<=1.0.0', '>2.0.0']); // => true
 final result = 100.satisfiedWith({'<=1.0.0' : false}); // => false
 ```
 
+## Use `VersionComparator`
+
+The `VersionComparator` overrides all comparison operators, letting you use >, <, >=, etc. for straightforward version comparisons.
+
+```dart
+final a = VersionComparator('1.0.0');
+final b = VersionComparator('1.0.1');
+
+print(a > b); // false
+print(a >= b); // false
+print(a < b); // true
+print(a <= b); // true
+print(a == b); // false
+print(a != b); // true
+```
+
 ## **Additional Parameters**
 
 - For all:
