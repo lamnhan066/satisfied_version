@@ -3,7 +3,7 @@ class Comparator implements Comparable<Comparator> {
   final String version;
 
   /// Detail of the version.
-  late final (int major, int minor, int patch)? detail;
+  late final (int major, int minor, int patch) detail;
 
   /// A comparator to compare 2 versions with format "major.minor.patch".
   Comparator({
@@ -12,33 +12,33 @@ class Comparator implements Comparable<Comparator> {
     detail = _splitVersion();
   }
 
-  /// Split the version into 3 number.
+  /// Split the version into 3 numbers.
   ///
-  /// Returns `null` when there is error when splitting.
-  (int major, int minor, int patch)? _splitVersion() {
-    final splitted = version.split('.');
-    final major = int.tryParse(splitted[0]);
-    final minor = int.tryParse(splitted[1]);
-    final patch = int.tryParse(splitted[2]);
+  /// Throws a FormatException if the version format is not "major.minor.patch" with valid integers.
+  (int major, int minor, int patch) _splitVersion() {
+    final regExp = RegExp(r'^(\d+)\.(\d+)\.(\d+)$');
+    final match = regExp.firstMatch(version);
 
-    final isError = major == null || minor == null || patch == null;
-    if (isError) {
-      return null;
+    if (match == null) {
+      throw FormatException(
+        'Invalid version format. Expected "major.minor.patch", but found: $version',
+      );
     }
-    return (major, minor, patch);
+
+    return (
+      int.parse(match.group(1)!),
+      int.parse(match.group(2)!),
+      int.parse(match.group(3)!),
+    );
   }
 
   bool operator >(Comparator other) {
-    if (detail == null || other.detail == null) {
-      return false;
-    }
-
-    final isGreaterMajor = detail!.$1 > other.detail!.$1;
+    final isGreaterMajor = detail.$1 > other.detail.$1;
     final isGreaterMinor =
-        detail!.$1 == other.detail!.$1 && detail!.$2 > other.detail!.$2;
-    final isGreaterPatch = detail!.$1 == other.detail!.$1 &&
-        detail!.$2 == other.detail!.$2 &&
-        detail!.$3 > other.detail!.$3;
+        detail.$1 == other.detail.$1 && detail.$2 > other.detail.$2;
+    final isGreaterPatch = detail.$1 == other.detail.$1 &&
+        detail.$2 == other.detail.$2 &&
+        detail.$3 > other.detail.$3;
 
     if (isGreaterMajor || isGreaterMinor || isGreaterPatch) {
       return true;
@@ -53,16 +53,12 @@ class Comparator implements Comparable<Comparator> {
   }
 
   bool operator <(Comparator other) {
-    if (detail == null || other.detail == null) {
-      return false;
-    }
-
-    final isLessMajor = detail!.$1 < other.detail!.$1;
+    final isLessMajor = detail.$1 < other.detail.$1;
     final isLessMinor =
-        detail!.$1 == other.detail!.$1 && detail!.$2 < other.detail!.$2;
-    final isLessPatch = detail!.$1 == other.detail!.$1 &&
-        detail!.$2 == other.detail!.$2 &&
-        detail!.$3 < other.detail!.$3;
+        detail.$1 == other.detail.$1 && detail.$2 < other.detail.$2;
+    final isLessPatch = detail.$1 == other.detail.$1 &&
+        detail.$2 == other.detail.$2 &&
+        detail.$3 < other.detail.$3;
 
     if (isLessMajor || isLessMinor || isLessPatch) {
       return true;
