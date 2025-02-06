@@ -19,6 +19,7 @@ void main() {
       final other2 = Comparator(version: '1.9.9');
       expect(comparator2 > other2, equals(true));
     });
+
     test('isGreaterEqual', () {
       final comparator = Comparator(version: '1.0.3');
       final other = Comparator(version: '1.0.2');
@@ -28,49 +29,58 @@ void main() {
       final comparator1 = Comparator(version: '1.0.3');
       expect(comparator1 >= comparator1, equals(true));
     });
+
     test('isLess', () {
       final comparator = Comparator(version: '1.0.0');
       final other = Comparator(version: '1.1.0');
       expect(comparator < other, equals(true));
       expect(other < comparator, equals(false));
     });
+
     test('isLessEqual', () {
       final comparator = Comparator(version: '1.0.2');
       final other = Comparator(version: '1.1.2');
       expect(comparator <= other, equals(true));
       expect(other <= comparator, equals(false));
     });
+
     test('equal', () {
       final comparator = Comparator(version: '1.0.0');
       final other = Comparator(version: '1.0.0');
       expect(comparator == other, equals(true));
       expect(comparator != other, equals(false));
     });
+
     test('different', () {
       final comparator = Comparator(version: '1.0.0');
       final other = Comparator(version: '1.0.1');
       expect(comparator == other, equals(false));
       expect(comparator != other, equals(true));
     });
+
     test('Leading zeros', () {
       final comparator = Comparator(version: '1.01.0');
       final other = Comparator(version: '1.1.0');
       expect(comparator == other, equals(true));
     });
+
     test('Same major & minor, different patch', () {
       final comparator = Comparator(version: '1.0.0');
       final other = Comparator(version: '1.0.1');
       expect(comparator < other, equals(true));
     });
+
     test('Zero handling', () {
       final comparator = Comparator(version: '0.0.0');
       final other = Comparator(version: '0.0.1');
       expect(comparator < other, equals(true));
     });
+
     test('Negative version handling', () {
       expect(() => Comparator(version: '-1.0.0'), throwsFormatException);
       expect(() => Comparator(version: '1.-1.0'), throwsFormatException);
     });
+
     test('Invalid version handling', () {
       expect(() => Comparator(version: 'invalid'), throwsFormatException);
       expect(() => Comparator(version: ''), throwsFormatException);
@@ -90,42 +100,50 @@ void main() {
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(false));
     });
+
     test('Different', () {
       final compareWith = '!=$numberCompareWith';
       expect(numberEqual.satisfiedWith(compareWith), equals(false));
       expect(numberGreater.satisfiedWith(compareWith), equals(true));
       expect(numberLess.satisfiedWith(compareWith), equals(true));
     });
+
     test('Greater', () {
       final compareWith = '>$numberCompareWith';
       expect(numberEqual.satisfiedWith(compareWith), equals(false));
       expect(numberGreater.satisfiedWith(compareWith), equals(true));
       expect(numberLess.satisfiedWith(compareWith), equals(false));
     });
+
     test('GreaterEqual', () {
       final compareWith = '>=$numberCompareWith';
       expect(numberEqual.satisfiedWith(compareWith), equals(true));
       expect(numberGreater.satisfiedWith(compareWith), equals(true));
       expect(numberLess.satisfiedWith(compareWith), equals(false));
     });
+
     test('Less', () {
       final compareWith = '<$numberCompareWith';
       expect(numberEqual.satisfiedWith(compareWith), equals(false));
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(true));
     });
+
     test('LessEqual', () {
       final compareWith = '<=$numberCompareWith';
       expect(numberEqual.satisfiedWith(compareWith), equals(true));
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(true));
     });
+
     test('Zero handling', () {
       expect(0.satisfiedWith(['>0']), equals(false));
     });
+
     test('Negative numbers', () {
       expect((-1).satisfiedWith(['>=0']), equals(false));
     });
+
     test('Invalid condition', () {
       final compareWith = 'invalid';
       expect(
@@ -140,6 +158,7 @@ void main() {
         equals('>=1.0.0'),
       );
     });
+
     test('createNumber', () {
       expect(
         SatisfiedVersion.createNumber(SatisfiedCondition.greaterEqual, 100),
@@ -246,9 +265,7 @@ void main() {
     test('satisfiedWith', () {
       testStringWithCondition.forEach((conditionString, expectResult) {
         final result = SatisfiedVersion.string(appVersion, conditionString);
-
         expect(result, equals(expectResult));
-
         // Extension
         expect(appVersion.satisfiedWith(conditionString), equals(expectResult));
       });
@@ -257,9 +274,7 @@ void main() {
     test('satisfiedList', () {
       testList.forEach((version, expectResult) {
         final result = SatisfiedVersion.list(version, conditionList);
-
         expect(result, equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionList), equals(expectResult));
       });
@@ -268,12 +283,7 @@ void main() {
     test('satisfiedList Within', () {
       testListWithin.forEach((version, expectResult) {
         final result = SatisfiedVersion.list(version, conditionListWithin);
-
-        expect(
-          result,
-          equals(expectResult),
-        );
-
+        expect(result, equals(expectResult));
         // Extension
         expect(
             version.satisfiedWith(conditionListWithin), equals(expectResult));
@@ -284,7 +294,6 @@ void main() {
       testMapWhenDefaultIsFalse.forEach((version, expectResult) {
         expect(SatisfiedVersion.map(version, conditionMap, defaultValue: false),
             equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionMap), equals(expectResult));
       });
@@ -292,7 +301,6 @@ void main() {
       testMapWhenDefaultIsTrue.forEach((version, expectResult) {
         expect(SatisfiedVersion.map(version, conditionMap, defaultValue: true),
             equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionMap, defaultValue: true),
             equals(expectResult));
@@ -384,9 +392,7 @@ void main() {
     test('satisfiedWith', () {
       testStringWithCondition.forEach((conditionString, expectResult) {
         final result = SatisfiedVersion.number(appVersion, conditionString);
-
         expect(result, equals(expectResult));
-
         // Extension
         expect(appVersion.satisfiedWith(conditionString), equals(expectResult));
       });
@@ -395,9 +401,7 @@ void main() {
     test('satisfiedList', () {
       testList.forEach((version, expectResult) {
         final result = SatisfiedVersion.listNumber(version, conditionList);
-
         expect(result, equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionList), equals(expectResult));
       });
@@ -407,12 +411,7 @@ void main() {
       testListWithin.forEach((version, expectResult) {
         final result =
             SatisfiedVersion.listNumber(version, conditionListWithin);
-
-        expect(
-          result,
-          equals(expectResult),
-        );
-
+        expect(result, equals(expectResult));
         // Extension
         expect(
             version.satisfiedWith(conditionListWithin), equals(expectResult));
@@ -425,7 +424,6 @@ void main() {
             SatisfiedVersion.mapNumber(version, conditionMap,
                 defaultValue: false),
             equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionMap), equals(expectResult));
       });
@@ -435,7 +433,6 @@ void main() {
             SatisfiedVersion.mapNumber(version, conditionMap,
                 defaultValue: true),
             equals(expectResult));
-
         // Extension
         expect(version.satisfiedWith(conditionMap, defaultValue: true),
             equals(expectResult));
