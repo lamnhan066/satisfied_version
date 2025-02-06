@@ -1,6 +1,6 @@
 name: satisfied_version
 description: Compare and check whether the version is satisfied with provided version (or build number) in String, List, or Map.
-version: 0.4.1
+version: 0.4.2
 homepage: https://github.com/lamnhan066/satisfied_version
 
 environment:
@@ -8,4 +8,4 @@ environment:
 
 dev_dependencies:
   test: ^1.24.6
-  lints: ^2.1.1
+  lints: ^5.1.1

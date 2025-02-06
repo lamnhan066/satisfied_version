@@ -1,3 +1,14 @@
+## 0.4.2
+
+* Add the different (!=) comparator.
+* Throw a `FormatException` if the version format is not "major.minor.patch" with valid non-negative integers.
+* Trim the inputted version before parsing.
+* Correct the typo: "conparator" -> "comparator".
+* Improve the parser to treat `001.02.0003` as `1.2.3`.
+* Export the `VersionComparator`.
+* Add more test cases.
+* Add a basic example and an URL in README to try it.
+
 ## 0.4.1
 
 * Update homepage URL.
