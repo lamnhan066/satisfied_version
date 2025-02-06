@@ -1,5 +1,5 @@
-import 'comparator.dart';
 import 'satisfiled_condition.dart';
+import 'version_comparator.dart';
 
 class SatisfiedVersion {
   /// Create a version with format ">=1.0.0" to avoid mistake.
@@ -97,11 +97,11 @@ class SatisfiedVersion {
       compareWith = '${defaultCondition.asString}$compareWith';
     }
 
-    final comparator = Comparator(version: version);
+    final comparator = VersionComparator(version);
 
     // Compare with 2 operator letters.
     final otherComparator =
-        Comparator(version: SatisfiedCondition.removeCondition(compareWith));
+        VersionComparator(SatisfiedCondition.removeCondition(compareWith));
 
     switch (SatisfiedCondition.parse(compareWith)) {
       case SatisfiedCondition.equalSingle:
@@ -152,9 +152,9 @@ class SatisfiedVersion {
     // Sort the versionList by it's version.
     versionListCopy.sort((a, b) {
       final aComparator =
-          Comparator(version: SatisfiedCondition.removeCondition(a));
+          VersionComparator(SatisfiedCondition.removeCondition(a));
       final bComparator =
-          Comparator(version: SatisfiedCondition.removeCondition(b));
+          VersionComparator(SatisfiedCondition.removeCondition(b));
       return aComparator.compareTo(bComparator);
     });
 
@@ -295,9 +295,9 @@ class SatisfiedVersion {
     // Sort the versionList by it's version.
     versionMapCopy.entries.toList().sort((a, b) {
       final aComparator =
-          Comparator(version: SatisfiedCondition.removeCondition(a.key));
+          VersionComparator(SatisfiedCondition.removeCondition(a.key));
       final bComparator =
-          Comparator(version: SatisfiedCondition.removeCondition(b.key));
+          VersionComparator(SatisfiedCondition.removeCondition(b.key));
       return aComparator.compareTo(bComparator);
     });
 

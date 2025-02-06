@@ -1,90 +1,89 @@
 import 'package:satisfied_version/satisfied_version.dart';
-import 'package:satisfied_version/src/comparator.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Comparator', () {
     test('isGreater', () {
-      final comparator = Comparator(version: '1.1.0');
-      final other = Comparator(version: '1.0.0');
+      final comparator = VersionComparator('1.1.0');
+      final other = VersionComparator('1.0.0');
       expect(comparator > other, equals(true));
       expect(other > comparator, equals(false));
 
-      final comparator1 = Comparator(version: '0.0.101');
-      final other1 = Comparator(version: '0.0.9');
+      final comparator1 = VersionComparator('0.0.101');
+      final other1 = VersionComparator('0.0.9');
       expect(comparator1 > other1, equals(true));
       expect(other1 > comparator1, equals(false));
 
-      final comparator2 = Comparator(version: '2.0.0');
-      final other2 = Comparator(version: '1.9.9');
+      final comparator2 = VersionComparator('2.0.0');
+      final other2 = VersionComparator('1.9.9');
       expect(comparator2 > other2, equals(true));
     });
 
     test('isGreaterEqual', () {
-      final comparator = Comparator(version: '1.0.3');
-      final other = Comparator(version: '1.0.2');
+      final comparator = VersionComparator('1.0.3');
+      final other = VersionComparator('1.0.2');
       expect(comparator >= other, equals(true));
       expect(other >= comparator, equals(false));
 
-      final comparator1 = Comparator(version: '1.0.3');
+      final comparator1 = VersionComparator('1.0.3');
       expect(comparator1 >= comparator1, equals(true));
     });
 
     test('isLess', () {
-      final comparator = Comparator(version: '1.0.0');
-      final other = Comparator(version: '1.1.0');
+      final comparator = VersionComparator('1.0.0');
+      final other = VersionComparator('1.1.0');
       expect(comparator < other, equals(true));
       expect(other < comparator, equals(false));
     });
 
     test('isLessEqual', () {
-      final comparator = Comparator(version: '1.0.2');
-      final other = Comparator(version: '1.1.2');
+      final comparator = VersionComparator('1.0.2');
+      final other = VersionComparator('1.1.2');
       expect(comparator <= other, equals(true));
       expect(other <= comparator, equals(false));
     });
 
     test('equal', () {
-      final comparator = Comparator(version: '1.0.0');
-      final other = Comparator(version: '1.0.0');
+      final comparator = VersionComparator('1.0.0');
+      final other = VersionComparator('1.0.0');
       expect(comparator == other, equals(true));
       expect(comparator != other, equals(false));
     });
 
     test('different', () {
-      final comparator = Comparator(version: '1.0.0');
-      final other = Comparator(version: '1.0.1');
+      final comparator = VersionComparator('1.0.0');
+      final other = VersionComparator('1.0.1');
       expect(comparator == other, equals(false));
       expect(comparator != other, equals(true));
     });
 
     test('Leading zeros', () {
-      final comparator = Comparator(version: '001.02.003');
-      final other = Comparator(version: '1.2.3');
+      final comparator = VersionComparator('001.02.003');
+      final other = VersionComparator('1.2.3');
       expect(comparator == other, equals(true));
     });
 
     test('Same major & minor, different patch', () {
-      final comparator = Comparator(version: '1.0.0');
-      final other = Comparator(version: '1.0.1');
+      final comparator = VersionComparator('1.0.0');
+      final other = VersionComparator('1.0.1');
       expect(comparator < other, equals(true));
     });
 
     test('Zero handling', () {
-      final comparator = Comparator(version: '0.0.0');
-      final other = Comparator(version: '0.0.1');
+      final comparator = VersionComparator('0.0.0');
+      final other = VersionComparator('0.0.1');
       expect(comparator < other, equals(true));
     });
 
     test('Negative version handling', () {
-      expect(() => Comparator(version: '-1.0.0'), throwsFormatException);
-      expect(() => Comparator(version: '1.-1.0'), throwsFormatException);
+      expect(() => VersionComparator('-1.0.0'), throwsFormatException);
+      expect(() => VersionComparator('1.-1.0'), throwsFormatException);
     });
 
     test('Invalid version handling', () {
-      expect(() => Comparator(version: 'invalid'), throwsFormatException);
-      expect(() => Comparator(version: ''), throwsFormatException);
-      expect(() => Comparator(version: '1..0.0'), throwsFormatException);
+      expect(() => VersionComparator('invalid'), throwsFormatException);
+      expect(() => VersionComparator(''), throwsFormatException);
+      expect(() => VersionComparator('1..0.0'), throwsFormatException);
     });
   });
 

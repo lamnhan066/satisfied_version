@@ -1,4 +1,4 @@
-class Comparator implements Comparable<Comparator> {
+class VersionComparator implements Comparable<VersionComparator> {
   /// Version with format "major.minor.patch".
   final String version;
 
@@ -6,9 +6,7 @@ class Comparator implements Comparable<Comparator> {
   late final (int major, int minor, int patch) detail;
 
   /// A comparator to compare 2 versions with format "major.minor.patch".
-  Comparator({
-    required this.version,
-  }) {
+  VersionComparator(this.version) {
     detail = _splitVersion();
   }
 
@@ -38,7 +36,7 @@ class Comparator implements Comparable<Comparator> {
     return (major, minor, patch);
   }
 
-  bool operator >(Comparator other) {
+  bool operator >(VersionComparator other) {
     final isGreaterMajor = detail.$1 > other.detail.$1;
     final isGreaterMinor =
         detail.$1 == other.detail.$1 && detail.$2 > other.detail.$2;
@@ -53,12 +51,12 @@ class Comparator implements Comparable<Comparator> {
     return false;
   }
 
-  bool operator >=(Comparator other) {
+  bool operator >=(VersionComparator other) {
     if (this == other) return true;
     return this > other;
   }
 
-  bool operator <(Comparator other) {
+  bool operator <(VersionComparator other) {
     final isLessMajor = detail.$1 < other.detail.$1;
     final isLessMinor =
         detail.$1 == other.detail.$1 && detail.$2 < other.detail.$2;
@@ -73,13 +71,13 @@ class Comparator implements Comparable<Comparator> {
     return false;
   }
 
-  bool operator <=(Comparator other) {
+  bool operator <=(VersionComparator other) {
     if (this == other) return true;
     return this < other;
   }
 
   @override
-  int compareTo(Comparator other) {
+  int compareTo(VersionComparator other) {
     if (this > other) return 1;
     if (this < other) return -1;
 
@@ -90,7 +88,7 @@ class Comparator implements Comparable<Comparator> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Comparator && hashCode == other.hashCode;
+    return other is VersionComparator && hashCode == other.hashCode;
   }
 
   @override
