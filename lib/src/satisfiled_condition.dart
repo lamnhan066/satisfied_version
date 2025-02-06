@@ -52,9 +52,9 @@ enum SatisfiedCondition {
     final condition = parse(
       version,
       defaultCondition: SatisfiedCondition.equal,
-    );
-    if (version.startsWith(condition.asString)) {
-      return version.substring(condition.asString.length);
+    ).asString;
+    if (version.startsWith(condition)) {
+      return version.substring(condition.length);
     }
     return version;
   }
