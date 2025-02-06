@@ -29,7 +29,7 @@ class VersionComparator implements Comparable<VersionComparator> {
 
     if (major < 0 || minor < 0 || patch < 0) {
       throw FormatException(
-        'Version numbers must be positive or zero. Found: $version',
+        'Version numbers must be non-negative. Found: $version',
       );
     }
 
@@ -87,11 +87,12 @@ class VersionComparator implements Comparable<VersionComparator> {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    return other is VersionComparator && hashCode == other.hashCode;
+    if (other is! VersionComparator) return false;
+    return detail.$1 == other.detail.$1 &&
+        detail.$2 == other.detail.$2 &&
+        detail.$3 == other.detail.$3;
   }
 
   @override
-  int get hashCode =>
-      detail.$1.hashCode ^ detail.$2.hashCode ^ detail.$3.hashCode;
+  int get hashCode => Object.hash(detail.$1, detail.$2, detail.$3);
 }
