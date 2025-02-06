@@ -25,6 +25,7 @@ enum SatisfiedCondition {
 
   /// Check if a String starts with condition.
   static bool isStartWithCondition(String version) {
+    version = version.trim();
     for (final condition in values) {
       if (version.startsWith(condition.asString)) return true;
     }
@@ -37,6 +38,7 @@ enum SatisfiedCondition {
     String version, {
     SatisfiedCondition defaultCondition = SatisfiedCondition.equal,
   }) {
+    version = version.trim();
     for (final condition in values) {
       if (version.startsWith(condition.asString)) return condition;
     }
@@ -46,6 +48,7 @@ enum SatisfiedCondition {
 
   /// Remove condition from this [version].
   static String removeCondition(String version) {
+    version = version.trim();
     final condition = parse(
       version,
       defaultCondition: SatisfiedCondition.equal,
