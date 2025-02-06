@@ -106,13 +106,13 @@ class SatisfiedVersion {
       case SatisfiedCondition.equal:
         return comparator == otherComparator;
       case SatisfiedCondition.greaterEqual:
-        return comparator.isGreaterEqual(otherComparator);
+        return comparator >= otherComparator;
       case SatisfiedCondition.lessEqual:
-        return comparator.isLessEqual(otherComparator);
+        return comparator <= otherComparator;
       case SatisfiedCondition.greater:
-        return comparator.isGreater(otherComparator);
+        return comparator > otherComparator;
       case SatisfiedCondition.less:
-        return comparator.isLess(otherComparator);
+        return comparator < otherComparator;
     }
   }
 

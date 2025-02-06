@@ -7,31 +7,37 @@ void main() {
     test('isGreater', () {
       final comparator = Comparator(version: '1.1.0');
       final other = Comparator(version: '1.0.0');
-      expect(comparator.isGreater(other), equals(true));
-      expect(other.isGreater(comparator), equals(false));
+      expect(comparator > other, equals(true));
+      expect(other > comparator, equals(false));
 
       final comparator1 = Comparator(version: '0.0.101');
       final other1 = Comparator(version: '0.0.9');
-      expect(comparator1.isGreater(other1), equals(true));
-      expect(other1.isGreater(comparator1), equals(false));
+      expect(comparator1 > other1, equals(true));
+      expect(other1 > comparator1, equals(false));
     });
     test('isGreaterEqual', () {
       final comparator = Comparator(version: '1.0.3');
       final other = Comparator(version: '1.0.2');
-      expect(comparator.isGreaterEqual(other), equals(true));
-      expect(other.isGreaterEqual(comparator), equals(false));
+      expect(comparator >= other, equals(true));
+      expect(other >= comparator, equals(false));
     });
     test('isLess', () {
       final comparator = Comparator(version: '1.0.0');
       final other = Comparator(version: '1.1.0');
-      expect(comparator.isLess(other), equals(true));
-      expect(other.isLess(comparator), equals(false));
+      expect(comparator < other, equals(true));
+      expect(other < comparator, equals(false));
     });
     test('isLessEqual', () {
       final comparator = Comparator(version: '1.0.2');
       final other = Comparator(version: '1.1.2');
-      expect(comparator.isLessEqual(other), equals(true));
-      expect(other.isLessEqual(comparator), equals(false));
+      expect(comparator <= other, equals(true));
+      expect(other <= comparator, equals(false));
+    });
+    test('equal', () {
+      final comparator = Comparator(version: '1.0.0');
+      final other = Comparator(version: '1.0.0');
+      expect(comparator == other, equals(true));
+      expect(comparator != other, equals(false));
     });
   });
 
@@ -70,6 +76,11 @@ void main() {
       expect(numberEqual.satisfiedWith(compareWith), equals(true));
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(true));
+    });
+    test('Invalid condition', () {
+      final compareWith = 'invalid';
+      expect(
+          () => numberEqual.satisfiedWith(compareWith), throwsFormatException);
     });
   });
 

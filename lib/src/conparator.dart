@@ -1,4 +1,4 @@
-class Comparator {
+class Comparator implements Comparable<Comparator> {
   /// Version with format "major.minor.patch".
   final String version;
 
@@ -28,8 +28,7 @@ class Comparator {
     return (major, minor, patch);
   }
 
-  /// this > other.
-  bool isGreater(Comparator other) {
+  bool operator >(Comparator other) {
     if (detail == null || other.detail == null) {
       return false;
     }
@@ -48,14 +47,12 @@ class Comparator {
     return false;
   }
 
-  /// this >= other.
-  bool isGreaterEqual(Comparator other) {
+  bool operator >=(Comparator other) {
     if (this == other) return true;
-    return isGreater(other);
+    return this > other;
   }
 
-  /// this < other.
-  bool isLess(Comparator other) {
+  bool operator <(Comparator other) {
     if (detail == null || other.detail == null) {
       return false;
     }
@@ -74,15 +71,15 @@ class Comparator {
     return false;
   }
 
-  /// this <= other.
-  bool isLessEqual(Comparator other) {
+  bool operator <=(Comparator other) {
     if (this == other) return true;
-    return isLess(other);
+    return this < other;
   }
 
+  @override
   int compareTo(Comparator other) {
-    if (isGreater(other)) return 1;
-    if (isLess(other)) return -1;
+    if (this > other) return 1;
+    if (this < other) return -1;
 
     return 0;
   }
