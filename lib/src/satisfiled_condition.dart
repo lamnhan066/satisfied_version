@@ -1,4 +1,7 @@
 enum SatisfiedCondition {
+  /// !=.
+  different('!='),
+
   /// ==.
   equal('=='),
 

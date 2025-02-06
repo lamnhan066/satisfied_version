@@ -1,4 +1,4 @@
-import 'conparator.dart';
+import 'comparator.dart';
 import 'satisfiled_condition.dart';
 
 class SatisfiedVersion {
@@ -54,6 +54,8 @@ class SatisfiedVersion {
       case SatisfiedCondition.equalSingle:
       case SatisfiedCondition.equal:
         return number == compareWithNumber;
+      case SatisfiedCondition.different:
+        return number != compareWithNumber;
       case SatisfiedCondition.greaterEqual:
         return number >= compareWithNumber;
       case SatisfiedCondition.lessEqual:
@@ -105,6 +107,8 @@ class SatisfiedVersion {
       case SatisfiedCondition.equalSingle:
       case SatisfiedCondition.equal:
         return comparator == otherComparator;
+      case SatisfiedCondition.different:
+        return comparator != otherComparator;
       case SatisfiedCondition.greaterEqual:
         return comparator >= otherComparator;
       case SatisfiedCondition.lessEqual:

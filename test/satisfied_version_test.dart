@@ -1,5 +1,5 @@
 import 'package:satisfied_version/satisfied_version.dart';
-import 'package:satisfied_version/src/conparator.dart';
+import 'package:satisfied_version/src/comparator.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -25,7 +25,6 @@ void main() {
       expect(comparator >= other, equals(true));
       expect(other >= comparator, equals(false));
 
-      // Edge case: Identical versions
       final comparator1 = Comparator(version: '1.0.3');
       expect(comparator1 >= comparator1, equals(true));
     });
@@ -47,6 +46,12 @@ void main() {
       expect(comparator == other, equals(true));
       expect(comparator != other, equals(false));
     });
+    test('different', () {
+      final comparator = Comparator(version: '1.0.0');
+      final other = Comparator(version: '1.0.1');
+      expect(comparator == other, equals(false));
+      expect(comparator != other, equals(true));
+    });
     test('Invalid version handling', () {
       expect(() => Comparator(version: 'invalid'), throwsFormatException);
       expect(() => Comparator(version: ''), throwsFormatException);
@@ -65,6 +70,12 @@ void main() {
       expect(numberEqual.satisfiedWith(compareWith), equals(true));
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(false));
+    });
+    test('Different', () {
+      final compareWith = '!=$numberCompareWith';
+      expect(numberEqual.satisfiedWith(compareWith), equals(false));
+      expect(numberGreater.satisfiedWith(compareWith), equals(true));
+      expect(numberLess.satisfiedWith(compareWith), equals(true));
     });
     test('Greater', () {
       final compareWith = '>$numberCompareWith';
@@ -151,6 +162,12 @@ void main() {
       '==0.0.9': false,
       '==0.0.10': false,
       '==0.100.100': false,
+      // !=
+      '!=1.0.0': false,
+      '!=1.0.1': true,
+      '!=0.0.9': true,
+      '!=0.0.10': true,
+      '!=0.100.100': true,
       // Default is SatisfiedCondition.equal
       '1.0.0': true,
       '1.0.1': false,
@@ -285,6 +302,10 @@ void main() {
       '==100': true,
       '==101': false,
       '==99': false,
+      // !=
+      '!=100': false,
+      '!=101': true,
+      '!=99': true,
       // Default is SatisfiedConditionequal
       '100': true,
       '101': false,
