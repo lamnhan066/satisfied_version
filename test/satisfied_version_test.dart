@@ -52,6 +52,25 @@ void main() {
       expect(comparator == other, equals(false));
       expect(comparator != other, equals(true));
     });
+    test('Leading zeros', () {
+      final comparator = Comparator(version: '1.01.0');
+      final other = Comparator(version: '1.1.0');
+      expect(comparator == other, equals(true));
+    });
+    test('Same major & minor, different patch', () {
+      final comparator = Comparator(version: '1.0.0');
+      final other = Comparator(version: '1.0.1');
+      expect(comparator < other, equals(true));
+    });
+    test('Zero handling', () {
+      final comparator = Comparator(version: '0.0.0');
+      final other = Comparator(version: '0.0.1');
+      expect(comparator < other, equals(true));
+    });
+    test('Negative version handling', () {
+      expect(() => Comparator(version: '-1.0.0'), throwsFormatException);
+      expect(() => Comparator(version: '1.-1.0'), throwsFormatException);
+    });
     test('Invalid version handling', () {
       expect(() => Comparator(version: 'invalid'), throwsFormatException);
       expect(() => Comparator(version: ''), throwsFormatException);
@@ -100,6 +119,12 @@ void main() {
       expect(numberEqual.satisfiedWith(compareWith), equals(true));
       expect(numberGreater.satisfiedWith(compareWith), equals(false));
       expect(numberLess.satisfiedWith(compareWith), equals(true));
+    });
+    test('Zero handling', () {
+      expect(0.satisfiedWith(['>0']), equals(false));
+    });
+    test('Negative numbers', () {
+      expect((-1).satisfiedWith(['>=0']), equals(false));
     });
     test('Invalid condition', () {
       final compareWith = 'invalid';
