@@ -14,7 +14,7 @@ class Comparator implements Comparable<Comparator> {
 
   /// Split the version into 3 numbers.
   ///
-  /// Throws a FormatException if the version format is not "major.minor.patch" with valid integers.
+  /// Throws a FormatException if the version format is not "major.minor.patch" with valid non-negative integers.
   (int major, int minor, int patch) _splitVersion() {
     final regExp = RegExp(r'^(\d+)\.(\d+)\.(\d+)$');
     final match = regExp.firstMatch(version);
@@ -25,11 +25,17 @@ class Comparator implements Comparable<Comparator> {
       );
     }
 
-    return (
-      int.parse(match.group(1)!),
-      int.parse(match.group(2)!),
-      int.parse(match.group(3)!),
-    );
+    final major = int.parse(match.group(1)!);
+    final minor = int.parse(match.group(2)!);
+    final patch = int.parse(match.group(3)!);
+
+    if (major < 0 || minor < 0 || patch < 0) {
+      throw FormatException(
+        'Version numbers must be positive or zero. Found: $version',
+      );
+    }
+
+    return (major, minor, patch);
   }
 
   bool operator >(Comparator other) {
@@ -88,5 +94,6 @@ class Comparator implements Comparable<Comparator> {
   }
 
   @override
-  int get hashCode => version.hashCode;
+  int get hashCode =>
+      detail.$1.hashCode ^ detail.$2.hashCode ^ detail.$3.hashCode;
 }
