@@ -2,6 +2,10 @@
 
 Compare and check whether the version is satisfied with provided version (or build number) in String, List, or Map.
 
+## Play With The Satisfied Version
+
+[https://pub.lamnhan.dev/satisfied_version](https://pub.lamnhan.dev/satisfied_version)
+
 ## **Usage**
 
 **Supports versions with format `major.minor.patch` and build number (integer).**
