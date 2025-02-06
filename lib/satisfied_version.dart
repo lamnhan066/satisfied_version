@@ -1,4 +1,4 @@
-library satisfied_version;
+library;
 
 export 'src/extension.dart';
 export 'src/satisfied_version.dart';
