@@ -59,8 +59,8 @@ void main() {
     });
 
     test('Leading zeros', () {
-      final comparator = Comparator(version: '1.01.0');
-      final other = Comparator(version: '1.1.0');
+      final comparator = Comparator(version: '001.02.003');
+      final other = Comparator(version: '1.2.3');
       expect(comparator == other, equals(true));
     });
 
