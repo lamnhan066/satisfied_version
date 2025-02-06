@@ -85,6 +85,10 @@ void main() {
       expect(() => VersionComparator(''), throwsFormatException);
       expect(() => VersionComparator('1..0.0'), throwsFormatException);
     });
+
+    test('Compare 1.0.0 vs 1.1.1', () {
+      expect(VersionComparator('1.0.0'), isNot(VersionComparator('1.1.1')));
+    });
   });
 
   group('SatisfiedVersion.number', () {
