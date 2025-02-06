@@ -14,12 +14,20 @@ void main() {
       final other1 = Comparator(version: '0.0.9');
       expect(comparator1 > other1, equals(true));
       expect(other1 > comparator1, equals(false));
+
+      final comparator2 = Comparator(version: '2.0.0');
+      final other2 = Comparator(version: '1.9.9');
+      expect(comparator2 > other2, equals(true));
     });
     test('isGreaterEqual', () {
       final comparator = Comparator(version: '1.0.3');
       final other = Comparator(version: '1.0.2');
       expect(comparator >= other, equals(true));
       expect(other >= comparator, equals(false));
+
+      // Edge case: Identical versions
+      final comparator1 = Comparator(version: '1.0.3');
+      expect(comparator1 >= comparator1, equals(true));
     });
     test('isLess', () {
       final comparator = Comparator(version: '1.0.0');
@@ -38,6 +46,11 @@ void main() {
       final other = Comparator(version: '1.0.0');
       expect(comparator == other, equals(true));
       expect(comparator != other, equals(false));
+    });
+    test('Invalid version handling', () {
+      expect(() => Comparator(version: 'invalid'), throwsFormatException);
+      expect(() => Comparator(version: ''), throwsFormatException);
+      expect(() => Comparator(version: '1..0.0'), throwsFormatException);
     });
   });
 
